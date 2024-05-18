@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://byb4313k0wfmn"]
+
+[ext_resource type="Script" path="res://Scripts/Cannon.gd" id="1_1birs"]
+[ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_lpp7r"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_1birs")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, -1000)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_lpp7r")
