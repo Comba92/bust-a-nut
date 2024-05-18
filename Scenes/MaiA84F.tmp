@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://fnppt3k1myhf"]
+
+[ext_resource type="Script" path="res://Scripts/Main.gd" id="1_a8m8w"]
+[ext_resource type="PackedScene" uid="uid://byb4313k0wfmn" path="res://Scenes/Cannon.tscn" id="2_hx4gr"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_a8m8w")
+
+[node name="Bubbles" type="Marker2D" parent="."]
+position = Vector2(86, 104)
+gizmo_extents = 20.0
+
+[node name="Cannon" parent="." instance=ExtResource("2_hx4gr")]
+position = Vector2(146, 487)
+
+[connection signal="shoot" from="Cannon" to="." method="_on_cannon_shoot"]

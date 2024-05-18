@@ -49,21 +49,45 @@ func find_neighbors() -> void:
       var b = bubbles.get_node(s)
       if b: bubble.neighbors.append(b)
 
-func dfs(bubble, visited) -> Dictionary:
+func dfs_colors(bubble, visited) -> Dictionary:
   visited[bubble] = true
   for n in bubble.neighbors:
     if not visited.has(n) and n.color == bubble.color:
-      dfs(n, visited)
+      dfs_colors(n, visited)
   
   return visited
+  
+func dfs_attached(bubble, visited) -> bool:
+  if bubble.grid_position.y == 0: return true
+  
+  visited[bubble] = true
+  var attached = false
+  for n in bubble.neighbors:
+    if not visited.has(n):
+      attached = attached || dfs_attached(n, visited)
+      
+  return attached
+  
+func find_hanging():
+  var hanging = []
+  
+  for bubble in bubbles.get_children():
+    var attached = dfs_attached(bubble, {})
+    if not attached: hanging.append(bubble)
+    
+  return hanging
 
 func explode_bubbles(bubble) -> void:
-  var visited = dfs(bubble, {})
-  if visited.size() < 3: return
-  for b in visited:
+  var connected_colors = dfs_colors(bubble, {})
+  if connected_colors.size() < 3: return
+  for b in connected_colors:
     bubbles.remove_child(b)
     
   find_neighbors()
+  
+  var hanging = find_hanging()
+  for b in hanging:
+    bubbles.remove_child(b)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -90,5 +114,5 @@ func _on_projectile_bubble_touched(proj) -> void:
   bubble.set_grid_position(bubble.position)
   bubble.set_color(proj.color)
   find_neighbors()
-  # explode_bubbles(bubble)
+  explode_bubbles(bubble)
 
