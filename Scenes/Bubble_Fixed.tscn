@@ -25,7 +25,7 @@ texture = ExtResource("2_5ewla")
 shape = SubResource("CircleShape2D_v422l")
 disabled = true
 
-[node name="Label" type="Label" parent="."]
+[node name="CoordinateLabel" type="Label" parent="."]
 visible = false
 top_level = true
 offset_right = 40.0
