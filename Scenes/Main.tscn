@@ -5,6 +5,8 @@
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a8m8w")
+max_width = 10
+max_height = 6
 
 [node name="Bubbles" type="Marker2D" parent="."]
 position = Vector2(53, 34)
