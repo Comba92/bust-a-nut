@@ -1,7 +1,7 @@
 extends Node2D
 
-const Bubble := preload("res://Scenes/Bubble_Fixed.tscn")
-const Projectile := preload("res://Scenes/Bubble_Projectile.tscn")
+const Bubble := preload("res://Scenes/BubbleFixed.tscn")
+const Projectile := preload("res://Scenes/BubbleProjectile.tscn")
 @onready var bubbles := $Bubbles
 
 @export var max_width := 8
@@ -30,6 +30,7 @@ func world_pos_to_grid(pos: Vector2) -> Vector2:
   var offset = 0 if ny % 2 == 0 else radius
   var nx := roundi((pos.x - offset) / diameter)
   return Vector2(nx, ny)
+
 
 func add_bubble(grid_pos: Vector2, color: Color) -> Node:
   var bubble := Bubble.instantiate()
@@ -65,14 +66,13 @@ func remove_bubble(bubble):
 
 func _ready() -> void:
   for y in range(0, max_height):
-    var is_even_row := y % 2 == 0
     for x in range(0, max_width):
       if (y % 2 == 1 and x == max_width-1): continue
       add_bubble(Vector2(x, y), Globals.colors.pick_random())
 
-    
+
 func find_neighbors() -> void:
-  for bubble in bubbles.get_children():
+  for bubble in bubbles_list.values():
     bubble.neighbors.clear()
 
     var is_even_row := roundi(bubble.grid_position.y) % 2 == 0
@@ -98,7 +98,8 @@ func dfs_attached(bubble: Node, visited: Dictionary) -> bool:
   
   visited[bubble] = true
   for n in bubble.neighbors:
-    if not visited.has(n):
+    var is_upper = n.grid_position.y <= bubble.grid_position.y
+    if not visited.has(n) and is_upper:
       if dfs_attached(n, visited): return true
 
   return false
@@ -117,21 +118,11 @@ func pop_bubbles(bubble) -> void:
   if connected_colors.size() < pop_count: return
   
   for b in connected_colors:
-    #bubbles_list.erase(b.grid_position)
     remove_bubble(b)
-
-  #find_neighbors()
   
   var hanging := find_hanging()
   for b in hanging:
-    #bubbles_list.erase(b.grid_position)
     remove_bubble(b)
-  
-  # find_neighbors()
-  
-  #var to_pop := connected_colors + hanging
-  #for b in to_pop:
-    #b.queue_free()
 
 
 func _process(delta: float) -> void:

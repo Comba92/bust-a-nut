@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://xkklim8c80qr"]
 
-[ext_resource type="Script" path="res://Scripts/Bubble_Projectile.gd" id="1_5wtqo"]
-[ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_4e0rq"]
+[ext_resource type="Script" path="res://Scripts/Bubble_Projectile.gd" id="1_apddv"]
+[ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_m26xq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijt8h"]
 radius = 20.0
@@ -11,7 +11,7 @@ radius = 18.0
 
 [node name="Node2D" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1_5wtqo")
+script = ExtResource("1_apddv")
 
 [node name="BubbleSize" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ijt8h")
@@ -20,7 +20,7 @@ disabled = true
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1.19209e-06, -3.57628e-07)
 scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_4e0rq")
+texture = ExtResource("2_m26xq")
 
 [node name="Area2D" type="Area2D" parent="."]
 

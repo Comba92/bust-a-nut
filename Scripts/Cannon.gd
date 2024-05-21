@@ -1,7 +1,7 @@
 extends Node2D
 
 var color: Color = Globals.colors.pick_random()
-var Projectile := preload('res://Scenes/Bubble_Projectile.tscn')
+var Projectile := preload('res://Scenes/BubbleProjectile.tscn')
 signal shoot
 
 # Called when the node enters the scene tree for the first time.
