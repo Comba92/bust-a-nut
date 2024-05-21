@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpcihj2h5k6ny"]
 
-[ext_resource type="Script" path="res://Scripts/Bubble.gd" id="1_m65w7"]
+[ext_resource type="Script" path="res://Scripts/Bubble_Fixed.gd" id="1_81uro"]
 [ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_5ewla"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijt8h"]
@@ -11,7 +11,7 @@ radius = 20.0
 
 [node name="StaticBody2D" type="StaticBody2D"]
 input_pickable = true
-script = ExtResource("1_m65w7")
+script = ExtResource("1_81uro")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ijt8h")
@@ -26,7 +26,6 @@ shape = SubResource("CircleShape2D_v422l")
 disabled = true
 
 [node name="CoordinateLabel" type="Label" parent="."]
-visible = false
 top_level = true
 offset_right = 40.0
 offset_bottom = 23.0

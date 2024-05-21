@@ -6,6 +6,7 @@ const Projectile := preload("res://Scenes/Bubble_Projectile.tscn")
 
 @export var max_width := 8
 @export var max_height := 2
+@export var pop_count := 3
 
 var bubbles_list := {}
 
@@ -35,13 +36,32 @@ func add_bubble(grid_pos: Vector2, color: Color) -> Node:
   bubbles.add_child(bubble)
   
   bubble.position.y = grid_pos.y * (bubble.diameter * Globals.triangular_height)
-  var offset = 0 if roundi(grid_pos.y) % 2 == 0 else bubble.radius
+  var is_even_row := roundi(grid_pos.y) % 2 == 0
+  var offset: float = 0 if is_even_row else bubble.radius
   bubble.position.x = grid_pos.x * (bubble.diameter) + offset
   bubble.set_grid_position(grid_pos)
   bubble.set_color(color)
   
   bubbles_list[grid_pos] = bubble
+  
+  var directions := even_row_directions if is_even_row else odd_row_directions
+  for dir in directions:
+    var pos = bubble.grid_position + dir
+    if bubbles_list.has(pos):
+      var neighbor = bubbles_list[pos]
+      bubble.neighbors.append(neighbor)
+      neighbor.neighbors.append(bubble)
+  
   return bubble
+
+func remove_bubble(bubble):
+  if not bubbles_list.has(bubble.grid_position): return
+  
+  bubbles_list.erase(bubble.grid_position)
+  for neighbor in bubble.neighbors:
+    neighbor.neighbors.erase(bubble)
+  
+  bubble.queue_free()
 
 func _ready() -> void:
   for y in range(0, max_height):
@@ -49,8 +69,7 @@ func _ready() -> void:
     for x in range(0, max_width):
       if (y % 2 == 1 and x == max_width-1): continue
       add_bubble(Vector2(x, y), Globals.colors.pick_random())
-    
-  find_neighbors()
+
     
 func find_neighbors() -> void:
   for bubble in bubbles.get_children():
@@ -95,22 +114,24 @@ func find_hanging() -> Array:
 
 func pop_bubbles(bubble) -> void:
   var connected_colors := dfs_colors(bubble, {})
-  if connected_colors.size() < Globals.pop_count: return
+  if connected_colors.size() < pop_count: return
   
   for b in connected_colors:
-    bubbles_list.erase(b.grid_position)
+    #bubbles_list.erase(b.grid_position)
+    remove_bubble(b)
 
-  find_neighbors()
+  #find_neighbors()
   
   var hanging := find_hanging()
   for b in hanging:
-    bubbles_list.erase(b.grid_position)
+    #bubbles_list.erase(b.grid_position)
+    remove_bubble(b)
   
-  find_neighbors()
+  # find_neighbors()
   
-  var to_pop := connected_colors + hanging
-  for b in to_pop:
-    b.queue_free()
+  #var to_pop := connected_colors + hanging
+  #for b in to_pop:
+    #b.queue_free()
 
 
 func _process(delta: float) -> void:
@@ -130,5 +151,4 @@ func _on_projectile_bubble_touched(proj) -> void:
   var grid_pos := world_pos_to_grid(proj.global_position - bubbles.global_position)
   var bubble := add_bubble(grid_pos, proj.color)
   
-  find_neighbors()
   pop_bubbles(bubble)

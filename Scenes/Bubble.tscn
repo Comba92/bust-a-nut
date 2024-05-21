@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bodfwfira013l"]
+
+[ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_oacul"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pfsfo"]
+radius = 18.0
+
+[sub_resource type="GDScript" id="GDScript_3on5j"]
+script/source = "extends Node2D
+@export var radius: float
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+  pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+  pass
+"
+
+[node name="Visual" type="CollisionShape2D"]
+shape = SubResource("CircleShape2D_pfsfo")
+script = SubResource("GDScript_3on5j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_oacul")
