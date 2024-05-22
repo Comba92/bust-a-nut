@@ -9,7 +9,7 @@ radius = 18.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_v422l"]
 radius = 20.0
 
-[node name="StaticBody2D" type="StaticBody2D"]
+[node name="StaticBody2D" type="StaticBody2D" groups=["bubbles"]]
 input_pickable = true
 script = ExtResource("1_evsuq")
 
@@ -26,7 +26,8 @@ shape = SubResource("CircleShape2D_v422l")
 disabled = true
 
 [node name="CoordinateLabel" type="Label" parent="."]
-top_level = true
+visible = false
+z_index = 100
 offset_right = 40.0
 offset_bottom = 23.0
 

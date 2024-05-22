@@ -17,7 +17,8 @@ func _process(delta: float) -> void:
 
   if Input.is_action_just_pressed("ui_select"):
     var proj := Projectile.instantiate()
-    proj.transform = transform
+    proj.velocity = Vector2.from_angle(rotation - PI/2) * proj.speed
+    proj.position = position
     proj.set_color(color)
     shoot.emit(proj)
     color = Globals.colors.pick_random()

@@ -140,6 +140,9 @@ func _on_projectile_bubble_touched(proj) -> void:
   proj.queue_free()
 
   var grid_pos := world_pos_to_grid(proj.global_position - bubbles.global_position)
+  print(grid_pos)
+  if bubbles_list.has(grid_pos): return
   var bubble := add_bubble(grid_pos, proj.color)
   
   pop_bubbles(bubble)
+  print(bubbles_list)

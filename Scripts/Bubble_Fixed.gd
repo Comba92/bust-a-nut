@@ -7,7 +7,6 @@ var color: Color
 var grid_position := Vector2.ZERO
 var neighbors := []
 
-
 func set_color(color: Color) -> void:
   self.color = color
   $Sprite2D.modulate = color

@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://fnppt3k1myhf"]
+[gd_scene load_steps=4 format=3 uid="uid://fnppt3k1myhf"]
 
 [ext_resource type="Script" path="res://Scripts/Main.gd" id="1_a8m8w"]
 [ext_resource type="PackedScene" uid="uid://byb4313k0wfmn" path="res://Scenes/Cannon.tscn" id="2_hx4gr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrmh3"]
+size = Vector2(20, 658)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a8m8w")
@@ -14,5 +17,17 @@ gizmo_extents = 20.0
 
 [node name="Cannon" parent="." instance=ExtResource("2_hx4gr")]
 position = Vector2(294, 474)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(20, 325)
+shape = SubResource("RectangleShape2D_wrmh3")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(484, 324)
+shape = SubResource("RectangleShape2D_wrmh3")
 
 [connection signal="shoot" from="Cannon" to="." method="_on_cannon_shoot"]
