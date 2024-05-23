@@ -24,7 +24,7 @@ const odd_row_directions := [
 ]
 
 func world_pos_to_grid(pos: Vector2) -> Vector2:
-  var radius = Bubble.instantiate().get_node("BubbleSize").shape.radius
+  var radius = Bubble.instantiate().get_node("CollisionShape2D").shape.radius
   var diameter = radius * 2
   var ny := roundi(pos.y / (diameter * Globals.triangular_height))
   var offset = 0 if ny % 2 == 0 else radius
@@ -140,9 +140,7 @@ func _on_projectile_bubble_touched(proj) -> void:
   proj.queue_free()
 
   var grid_pos := world_pos_to_grid(proj.global_position - bubbles.global_position)
-  print(grid_pos)
   if bubbles_list.has(grid_pos): return
   var bubble := add_bubble(grid_pos, proj.color)
   
   pop_bubbles(bubble)
-  print(bubbles_list)

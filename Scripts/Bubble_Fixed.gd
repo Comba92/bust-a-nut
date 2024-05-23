@@ -1,7 +1,7 @@
 extends StaticBody2D
 
 var color: Color
-@onready var radius: float = $BubbleSize.shape.radius
+@onready var radius: float = $CollisionShape2D.shape.radius
 @onready var diameter := radius * 2
 
 var grid_position := Vector2.ZERO

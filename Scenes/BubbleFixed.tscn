@@ -1,15 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpcihj2h5k6ny"]
+[gd_scene load_steps=4 format=3 uid="uid://bpcihj2h5k6ny"]
 
 [ext_resource type="Script" path="res://Scripts/Bubble_Fixed.gd" id="1_evsuq"]
 [ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_epq5g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijt8h"]
-radius = 18.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_v422l"]
-radius = 20.0
+radius = 19.0
 
 [node name="StaticBody2D" type="StaticBody2D" groups=["bubbles"]]
+collision_mask = 3
 input_pickable = true
 script = ExtResource("1_evsuq")
 
@@ -20,10 +18,6 @@ shape = SubResource("CircleShape2D_ijt8h")
 position = Vector2(1.19209e-06, -3.57628e-07)
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_epq5g")
-
-[node name="BubbleSize" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_v422l")
-disabled = true
 
 [node name="CoordinateLabel" type="Label" parent="."]
 visible = false

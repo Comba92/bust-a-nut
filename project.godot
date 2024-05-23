@@ -20,6 +20,11 @@ config/icon="res://icon.svg"
 
 Globals="*res://Scripts/Globals.gd"
 
+[display]
+
+window/size/viewport_width=800
+window/size/viewport_height=600
+
 [editor]
 
 version_control/plugin_name="GitPlugin"
@@ -27,8 +32,9 @@ version_control/autoload_on_startup=true
 
 [layer_names]
 
-2d_physics/layer_1="Fixed_Bubbles"
-2d_physics/layer_2="Projectile_Bubbles"
+2d_physics/layer_1="FixedBubbles"
+2d_physics/layer_2="ProjectileBubbles"
+2d_physics/layer_3="Walls"
 
 [physics]
 
