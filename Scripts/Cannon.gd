@@ -1,6 +1,6 @@
 extends Node2D
 
-var color: Color = Globals.colors.pick_random()
+var type: Globals.Bubble = Globals.bubbleTypes.pick_random()
 var Projectile := preload('res://Scenes/BubbleProjectile.tscn')
 
 @onready var first_ray := $RayCast2D
@@ -9,7 +9,7 @@ signal shoot
 var bouncing = null
 
 func _ready() -> void:
-  $Sprite2D.modulate = color
+  $Sprite2D.modulate = type.color
 
 func _process(delta: float) -> void:
   if Input.is_action_pressed("ui_left"):
@@ -22,10 +22,10 @@ func _process(delta: float) -> void:
     var proj := Projectile.instantiate()
     proj.velocity = Vector2.from_angle(rotation - PI/2) * proj.speed
     proj.position = position
-    proj.set_color(color)
+    proj.set_type(type)
     shoot.emit(proj)
-    color = Globals.colors.pick_random()
-    $Sprite2D.modulate = color
+    type = Globals.bubbleTypes.pick_random()
+    $Sprite2D.modulate = type.color
 
 func _physics_process(delta: float) -> void:
   if first_ray.is_colliding():

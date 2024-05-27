@@ -32,12 +32,12 @@ func world_pos_to_grid(pos: Vector2) -> Vector2:
   return Vector2(nx, ny)
 
 
-func add_bubble(grid_pos: Vector2, color: Color) -> Node:
+func add_bubble(grid_pos: Vector2, type: Globals.Bubble) -> Node:
   var bubble := Bubble.instantiate()
   bubbles.add_child(bubble)
   
   bubble.set_grid_position(grid_pos)
-  bubble.set_color(color)
+  bubble.set_type(type)
   
   bubbles_list[grid_pos] = bubble
   
@@ -69,7 +69,7 @@ func _ready() -> void:
   for y in range(0, max_height):
     for x in range(0, max_width):
       if (y % 2 == 1 and x == max_width-1): continue
-      add_bubble(Vector2(x, y), Globals.colors.pick_random())
+      add_bubble(Vector2(x, y), Globals.bubbleTypes.pick_random())
 
 
 func find_neighbors() -> void:
@@ -89,7 +89,7 @@ func find_neighbors() -> void:
 func dfs_colors(bubble: Node, visited: Dictionary) -> Array:
   visited[bubble] = true
   for n in bubble.neighbors:
-    if not visited.has(n) and n.color == bubble.color:
+    if not visited.has(n) and n.type.color == bubble.type.color:
       dfs_colors(n, visited)
   
   return visited.keys()
@@ -142,7 +142,7 @@ func _on_projectile_bubble_touched(proj) -> void:
 
   var grid_pos := world_pos_to_grid(proj.global_position - bubbles.global_position)
   if bubbles_list.has(grid_pos): return
-  var bubble := add_bubble(grid_pos, proj.color)
+  var bubble := add_bubble(grid_pos, proj.type)
   
   pop_bubbles(bubble)
 

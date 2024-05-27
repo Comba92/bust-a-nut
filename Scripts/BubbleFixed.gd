@@ -1,14 +1,19 @@
 extends StaticBody2D
 
-var color: Color
 @onready var radius: float = $CollisionShape2D.shape.radius
 @onready var diameter := radius * 2
+var type: Globals.Bubble
 
 var grid_position := Vector2.ZERO
 var neighbors := []
 
+func set_type(type: Globals.Bubble) -> void:
+  self.type = type
+  $Sprite2D.modulate = type.color
+
+# deprecated
 func set_color(color: Color) -> void:
-  self.color = color
+  # self.color = color
   $Sprite2D.modulate = color
 
 func is_on_even_row():

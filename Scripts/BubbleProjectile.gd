@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 1500
-@onready var color: Color
+var type: Globals.Bubble
 
 signal bubble_touched
 
@@ -17,6 +17,11 @@ func _physics_process(delta: float) -> void:
       var normal := collision.get_normal()
       velocity = velocity.bounce(normal)
 
+func set_type(type: Globals.Bubble) -> void:
+  self.type = type
+  $Sprite2D.modulate = type.color
+
+# deprecated
 func set_color(color: Color) -> void:
-  self.color = color
+  # self.color = color
   $Sprite2D.modulate = color
