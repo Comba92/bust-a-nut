@@ -2,10 +2,12 @@ extends Node2D
 
 const Bubble := preload("res://Scenes/BubbleFixed.tscn")
 const Projectile := preload("res://Scenes/BubbleProjectile.tscn")
-@onready var bubbles := $Bubbles
+@onready var bubbles := $Grid/Bubbles
+@onready var radius = Bubble.instantiate().get_node("CollisionShape2D").shape.radius
+@onready var diameter = radius * 2
 
-@export var max_width := 8
-@export var max_height := 2
+@export var max_width := 9
+@export var max_height := 3
 @export var pop_count := 3
 
 var bubbles_list := {}
@@ -24,8 +26,6 @@ const odd_row_directions := [
 ]
 
 func world_pos_to_grid(pos: Vector2) -> Vector2:
-  var radius = Bubble.instantiate().get_node("CollisionShape2D").shape.radius
-  var diameter = radius * 2
   var ny := roundi(pos.y / (diameter * Globals.triangular_height))
   var offset = 0 if ny % 2 == 0 else radius
   var nx := roundi((pos.x - offset) / diameter)
@@ -36,15 +36,12 @@ func add_bubble(grid_pos: Vector2, color: Color) -> Node:
   var bubble := Bubble.instantiate()
   bubbles.add_child(bubble)
   
-  bubble.position.y = grid_pos.y * (bubble.diameter * Globals.triangular_height)
-  var is_even_row := roundi(grid_pos.y) % 2 == 0
-  var offset: float = 0 if is_even_row else bubble.radius
-  bubble.position.x = grid_pos.x * (bubble.diameter) + offset
   bubble.set_grid_position(grid_pos)
   bubble.set_color(color)
   
   bubbles_list[grid_pos] = bubble
   
+  var is_even_row = bubble.is_on_even_row()
   var directions := even_row_directions if is_even_row else odd_row_directions
   for dir in directions:
     var pos = bubble.grid_position + dir
@@ -65,6 +62,10 @@ func remove_bubble(bubble):
   bubble.queue_free()
 
 func _ready() -> void:
+  # Centering grid relative to pivot
+  var center_x = (max_width * diameter)/2 - radius
+  bubbles.position.x -= center_x
+  
   for y in range(0, max_height):
     for x in range(0, max_width):
       if (y % 2 == 1 and x == max_width-1): continue
@@ -127,7 +128,7 @@ func pop_bubbles(bubble) -> void:
 
 func _process(delta: float) -> void:
   if Input.is_action_just_pressed("ui_down"):
-    for b in bubbles.get_children():
+    for b in bubbles_list.values():
       pop_bubbles(b)
 
 func _on_cannon_shoot(projectile) -> void:
@@ -144,3 +145,6 @@ func _on_projectile_bubble_touched(proj) -> void:
   var bubble := add_bubble(grid_pos, proj.color)
   
   pop_bubbles(bubble)
+
+func _on_lowering_timer_timeout() -> void:
+  bubbles.position.y += radius

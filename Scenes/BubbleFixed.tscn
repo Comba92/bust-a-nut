@@ -1,29 +1,26 @@
 [gd_scene load_steps=4 format=3 uid="uid://bpcihj2h5k6ny"]
 
-[ext_resource type="Script" path="res://Scripts/Bubble_Fixed.gd" id="1_evsuq"]
-[ext_resource type="Texture2D" uid="uid://d2ufdd6sikx72" path="res://icon.svg" id="2_epq5g"]
+[ext_resource type="Script" path="res://Scripts/BubbleFixed.gd" id="1_i2mxd"]
+[ext_resource type="PackedScene" uid="uid://dcf08xag1ddxf" path="res://Scenes/BubbleVisual.tscn" id="2_fjohw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ijt8h"]
-radius = 19.0
+radius = 35.0
 
 [node name="StaticBody2D" type="StaticBody2D" groups=["bubbles"]]
 collision_mask = 3
 input_pickable = true
-script = ExtResource("1_evsuq")
+script = ExtResource("1_i2mxd")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ijt8h")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(1.19209e-06, -3.57628e-07)
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("2_epq5g")
 
 [node name="CoordinateLabel" type="Label" parent="."]
 visible = false
 z_index = 100
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="Sprite2D" parent="." instance=ExtResource("2_fjohw")]
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

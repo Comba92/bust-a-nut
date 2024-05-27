@@ -4,56 +4,57 @@
 [ext_resource type="PackedScene" uid="uid://byb4313k0wfmn" path="res://Scenes/Cannon.tscn" id="2_hx4gr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrmh3"]
-size = Vector2(20, 658)
+size = Vector2(20, 1284)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_a8m8w")
-max_width = 10
-max_height = 6
 
-[node name="Bubbles" type="Marker2D" parent="."]
-position = Vector2(67, 40)
-gizmo_extents = 20.0
-
-[node name="Cannon" parent="." instance=ExtResource("2_hx4gr")]
-position = Vector2(250, 482)
-
-[node name="LeftWall" type="StaticBody2D" parent="."]
-collision_layer = 4
-collision_mask = 7
+[node name="Grid" type="Marker2D" parent="."]
+position = Vector2(360, 174)
+gizmo_extents = 50.0
 metadata/_edit_group_ = true
 
+[node name="Bubbles" type="Node2D" parent="Grid"]
+
+[node name="LoweringTimer" type="Timer" parent="Grid/Bubbles"]
+wait_time = 5.0
+
+[node name="Cannon" parent="." instance=ExtResource("2_hx4gr")]
+position = Vector2(360, 1083)
+
+[node name="LeftWall" type="StaticBody2D" parent="."]
+position = Vector2(-10, 1)
+collision_layer = 4
+collision_mask = 7
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
-position = Vector2(20, 325)
+position = Vector2(23, 635)
 shape = SubResource("RectangleShape2D_wrmh3")
 
 [node name="RightWall" type="StaticBody2D" parent="."]
+position = Vector2(717, 306)
 collision_layer = 4
 collision_mask = 7
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
-position = Vector2(514, 322)
+position = Vector2(-10, 330)
 shape = SubResource("RectangleShape2D_wrmh3")
 
 [node name="UpperWall" type="StaticBody2D" parent="."]
-position = Vector2(575, 284)
+position = Vector2(641, -9)
 rotation = 1.5708
 collision_layer = 4
 collision_mask = 7
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="UpperWall"]
-position = Vector2(20, 325)
+position = Vector2(17.001, 276)
 shape = SubResource("RectangleShape2D_wrmh3")
-disabled = true
 
 [node name="LowerWall" type="StaticBody2D" parent="."]
-position = Vector2(581, 632)
+position = Vector2(669, 1253)
 rotation = 1.5708
 collision_layer = 4
 collision_mask = 7
-metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LowerWall"]
 position = Vector2(20, 325)

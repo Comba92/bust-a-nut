@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var speed = 800
+@export var speed = 1500
 @onready var color: Color
 
 signal bubble_touched
